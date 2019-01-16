@@ -341,9 +341,16 @@ def format_datum(datum):
        write as its value.
     """
     try:
-        return bytesToStr(datum.map['country'].map['iso_code'].data)
+        return bytesToStr(datum.map['registered_country'].map['iso_code'].data)
     except KeyError:
-        pass
+        try:
+            return bytesToStr(datum.map['country'].map['iso_code'].data)
+        except KeyError:
+                try:
+                    return bytesToStr(datum.map['continent'].map['code'].data)
+                except KeyError:
+                        #print vars(datum.map['traits'])
+                        pass
     return None
 
 IPV4_PREFIX = "0"*96
